@@ -24,12 +24,7 @@ public class CategoriaResource {
 	public ResponseEntity<?> find(@PathVariable Integer id) {
 		Categoria obj = service.buscar(id);
 		
-		Categoria cat1 = new Categoria(1, "Eletrônicos");
-		Categoria cat2 = new Categoria(2, "Moveis");
 		
-		List<Categoria> categosrias = new ArrayList<Categoria>();
-		categosrias.add(cat1);
-		categosrias.add(cat2);
 		
 		return ResponseEntity.ok().body(obj) ;
 	}
