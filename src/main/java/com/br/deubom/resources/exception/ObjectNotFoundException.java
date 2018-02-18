@@ -1,4 +1,4 @@
-package com.br.deubom.services;
+package com.br.deubom.resources.exception;
 
 public class ObjectNotFoundException extends RuntimeException{
 

@@ -3,22 +3,22 @@ package com.br.deubom.services;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.br.deubom.domain.Categoria;
-import com.br.deubom.repositories.CategoriaRepository;
+import com.br.deubom.domain.Cliente;
+import com.br.deubom.repositories.ClienteRepository;
 import com.br.deubom.resources.exception.ObjectNotFoundException;
 
 @Service
-public class CategoriaService {
+public class ClienteService {
 
 	@Autowired
-	public CategoriaRepository repo;
+	public ClienteRepository repo;
 	
-	public Categoria buscar(Integer id) {
+	public Cliente buscar(Integer id) {
 		
-		Categoria obj = repo.findOne(id);
+		Cliente obj = repo.findOne(id);
 		if(obj == null) {
 			throw new ObjectNotFoundException("Objeto não encontrado! Id : " + id + 
-					", tipo: " + Categoria.class.getName());
+					", tipo: " + Cliente.class.getName());
 		}
 		return obj;
 	}
