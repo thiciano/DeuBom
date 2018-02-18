@@ -13,8 +13,8 @@ import com.br.deubom.domain.Cidade;
 import com.br.deubom.domain.Cliente;
 import com.br.deubom.domain.Endereco;
 import com.br.deubom.domain.Estado;
+import com.br.deubom.domain.ItemPedido;
 import com.br.deubom.domain.Pagamento;
-import com.br.deubom.domain.PagamentoComBoleto;
 import com.br.deubom.domain.PagamentoComCartao;
 import com.br.deubom.domain.Pedido;
 import com.br.deubom.domain.Produto;
@@ -25,6 +25,7 @@ import com.br.deubom.repositories.CidadeRepository;
 import com.br.deubom.repositories.ClienteRepository;
 import com.br.deubom.repositories.EnderecoRepository;
 import com.br.deubom.repositories.EstadoRepository;
+import com.br.deubom.repositories.ItemPedidoRepository;
 import com.br.deubom.repositories.PagamentoRepository;
 import com.br.deubom.repositories.PedidoRepository;
 import com.br.deubom.repositories.ProdutoRepository;
@@ -55,6 +56,9 @@ public class DeuBomApplication implements CommandLineRunner {
 	
 	@Autowired
 	public PagamentoRepository pagamentoRepository;
+	
+	@Autowired
+	public ItemPedidoRepository itemPedidoRepository;
 	
 	public static void main(String[] args) {
 		SpringApplication.run(DeuBomApplication.class, args);
@@ -124,13 +128,24 @@ public class DeuBomApplication implements CommandLineRunner {
 		Pagamento pagto2 = new PagamentoComCartao(null, EnumEstadoPagamento.PENDENTE, ped2, 10);
 		ped2.setPagamento(pagto2);
 		
-//		Pagamento pagto3 = new PagamentoComBoleto(null, EnumEstadoPagamento.PENDENTE, ped1, sdf.parse("30/09/2017 00:00"), sdf.parse("30/09/2018 00:00"));
-//		ped1.setPagamento(pagto3);
-		
 		cli1.getPedidos().addAll(Arrays.asList(ped1, ped2));
 		
 		pedidoRepository.save(Arrays.asList(ped1, ped2));
 		pagamentoRepository.save(Arrays.asList(pagto1, pagto2));
+		
+		ItemPedido ip1 = new ItemPedido(ped1, p1, 0.00, 1, 2000.00);
+		ItemPedido ip2 = new ItemPedido(ped1, p3, 0.00, 1, 80.00);
+		ItemPedido ip3 = new ItemPedido(ped2, p2, 100.00, 1, 800.00);
+
+		ped1.getItens().addAll(Arrays.asList(ip1,ip2));
+		ped2.getItens().addAll(Arrays.asList(ip3));
+		
+		p1.getItens().addAll(Arrays.asList(ip1));
+		p2.getItens().addAll(Arrays.asList(ip3));
+		p3.getItens().addAll(Arrays.asList(ip2));
+		
+		itemPedidoRepository.save(Arrays.asList(ip1,ip2,ip3));
+		
 	}
 	
 }
