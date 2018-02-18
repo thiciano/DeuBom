@@ -1,5 +1,6 @@
 package com.br.deubom;
 
+import java.text.SimpleDateFormat;
 import java.util.Arrays;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,13 +13,20 @@ import com.br.deubom.domain.Cidade;
 import com.br.deubom.domain.Cliente;
 import com.br.deubom.domain.Endereco;
 import com.br.deubom.domain.Estado;
+import com.br.deubom.domain.Pagamento;
+import com.br.deubom.domain.PagamentoComBoleto;
+import com.br.deubom.domain.PagamentoComCartao;
+import com.br.deubom.domain.Pedido;
 import com.br.deubom.domain.Produto;
+import com.br.deubom.domain.enums.EnumEstadoPagamento;
 import com.br.deubom.domain.enums.EnumTipoPessoa;
 import com.br.deubom.repositories.CategoriaRepository;
 import com.br.deubom.repositories.CidadeRepository;
 import com.br.deubom.repositories.ClienteRepository;
 import com.br.deubom.repositories.EnderecoRepository;
 import com.br.deubom.repositories.EstadoRepository;
+import com.br.deubom.repositories.PagamentoRepository;
+import com.br.deubom.repositories.PedidoRepository;
 import com.br.deubom.repositories.ProdutoRepository;
 
 @SpringBootApplication
@@ -41,6 +49,12 @@ public class DeuBomApplication implements CommandLineRunner {
 	
 	@Autowired
 	public CidadeRepository cidadeRepository;
+	
+	@Autowired
+	public PedidoRepository pedidoRepository;
+	
+	@Autowired
+	public PagamentoRepository pagamentoRepository;
 	
 	public static void main(String[] args) {
 		SpringApplication.run(DeuBomApplication.class, args);
@@ -99,6 +113,24 @@ public class DeuBomApplication implements CommandLineRunner {
 		clienteRepository.save(Arrays.asList(cli1, cli2));
 		enderecoRepository.save(Arrays.asList(e1, e2));
 		
+		SimpleDateFormat	 sdf = new SimpleDateFormat("dd/MM/YYYY hh:mm");
+		
+		Pedido ped1  = new Pedido(null, sdf.parse("30/09/2017 10:32"), cli1, e1);
+		Pedido ped2  = new Pedido(null, sdf.parse("10/01/2018 17:32"), cli2, e2);
+		
+		Pagamento pagto1 = new PagamentoComCartao(null, EnumEstadoPagamento.QUITADO, ped1, 6);
+		ped1.setPagamento(pagto1);
+		
+		Pagamento pagto2 = new PagamentoComCartao(null, EnumEstadoPagamento.PENDENTE, ped2, 10);
+		ped2.setPagamento(pagto2);
+		
+//		Pagamento pagto3 = new PagamentoComBoleto(null, EnumEstadoPagamento.PENDENTE, ped1, sdf.parse("30/09/2017 00:00"), sdf.parse("30/09/2018 00:00"));
+//		ped1.setPagamento(pagto3);
+		
+		cli1.getPedidos().addAll(Arrays.asList(ped1, ped2));
+		
+		pedidoRepository.save(Arrays.asList(ped1, ped2));
+		pagamentoRepository.save(Arrays.asList(pagto1, pagto2));
 	}
 	
 }
