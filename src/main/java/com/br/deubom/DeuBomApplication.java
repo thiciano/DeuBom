@@ -8,8 +8,12 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 import com.br.deubom.domain.Categoria;
+import com.br.deubom.domain.Cidade;
+import com.br.deubom.domain.Estado;
 import com.br.deubom.domain.Produto;
 import com.br.deubom.repositories.CategoriaRepository;
+import com.br.deubom.repositories.CidadeRepository;
+import com.br.deubom.repositories.EstadoRepository;
 import com.br.deubom.repositories.ProdutoRepository;
 
 @SpringBootApplication
@@ -20,6 +24,12 @@ public class DeuBomApplication implements CommandLineRunner {
 
 	@Autowired
 	public ProdutoRepository produtoRepository;
+	
+	@Autowired
+	public EstadoRepository estadoRepository;
+	
+	@Autowired
+	public CidadeRepository cidadeRepository;
 	
 	public static void main(String[] args) {
 		SpringApplication.run(DeuBomApplication.class, args);
@@ -42,8 +52,28 @@ public class DeuBomApplication implements CommandLineRunner {
 		p3.getCategorias().addAll(Arrays.asList(cat1));
 		
 		categoriaRepository.save(Arrays.asList(cat1, cat2));
+
 		produtoRepository.save(Arrays.asList(p1,p2,p3));
+		
+		
+		Estado est1 = new Estado(null, "Distrito Federal"); 
+		Estado est2 = new Estado(null, "Minas Gerais"); 
+
+		Cidade cid1 = new Cidade(null, "Brasília", est1);
+		Cidade cid2 = new Cidade(null, "uberlandia", est2);
+		Cidade cid3 = new Cidade(null, "Araguari", est2);
+		
+		est1.getCidades().addAll(Arrays.asList(cid1));
+		est2.getCidades().addAll(Arrays.asList(cid2, cid3));
+		
+	
+		
+		estadoRepository.save(Arrays.asList(est1, est2));
+		
+		cidadeRepository.save(Arrays.asList(cid1, cid2, cid3));
+		
 	}
 	
 }
 
+ 
