@@ -15,6 +15,7 @@ import com.br.deubom.domain.Endereco;
 import com.br.deubom.domain.Estado;
 import com.br.deubom.domain.ItemPedido;
 import com.br.deubom.domain.Pagamento;
+import com.br.deubom.domain.PagamentoComBoleto;
 import com.br.deubom.domain.PagamentoComCartao;
 import com.br.deubom.domain.Pedido;
 import com.br.deubom.domain.Produto;
@@ -122,7 +123,7 @@ public class DeuBomApplication implements CommandLineRunner {
 		Pedido ped1  = new Pedido(null, sdf.parse("30/09/2017 10:32"), cli1, e1);
 		Pedido ped2  = new Pedido(null, sdf.parse("10/01/2018 17:32"), cli2, e2);
 		
-		Pagamento pagto1 = new PagamentoComCartao(null, EnumEstadoPagamento.QUITADO, ped1, 6);
+		Pagamento pagto1 = new PagamentoComBoleto(null, EnumEstadoPagamento.QUITADO, ped1, sdf.parse("30/09/2017 10:32"), sdf.parse("30/09/2017 10:32"));
 		ped1.setPagamento(pagto1);
 		
 		Pagamento pagto2 = new PagamentoComCartao(null, EnumEstadoPagamento.PENDENTE, ped2, 10);
