@@ -5,7 +5,7 @@ import org.springframework.stereotype.Service;
 
 import com.br.deubom.domain.Cliente;
 import com.br.deubom.repositories.ClienteRepository;
-import com.br.deubom.resources.exception.ObjectNotFoundException;
+import com.br.deubom.services.exception.ObjectNotFoundException;
 
 @Service
 public class ClienteService {
