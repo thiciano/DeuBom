@@ -92,7 +92,8 @@ public class DeuBomApplication implements CommandLineRunner {
 		Cidade cid1 = new Cidade(null, "Brasília", est1);
 		Cidade cid2 = new Cidade(null, "uberlandia", est2);
 		Cidade cid3 = new Cidade(null, "Araguari", est2);
-		
+
+
 		est1.getCidades().addAll(Arrays.asList(cid1));
 		est2.getCidades().addAll(Arrays.asList(cid2, cid3));
 		
