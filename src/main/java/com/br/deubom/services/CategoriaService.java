@@ -1,5 +1,7 @@
 package com.br.deubom.services;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
@@ -15,14 +17,21 @@ public class CategoriaService {
 	@Autowired
 	public CategoriaRepository repo;
 	
-	public Categoria find(Integer id) {
-		
+	public Categoria find(Integer id) {		
 		Categoria obj = repo.findOne(id);
 		if(obj == null) {
 			throw new ObjectNotFoundException("Objeto não encontrado! Id : " + id + 
 					", tipo: " + Categoria.class.getName());
 		}
 		return obj;
+	}
+
+	public List<Categoria> findAll() {
+		List<Categoria> lista = repo.findAll();
+		if(lista == null) {
+			throw new ObjectNotFoundException("Nenhum objeto encontrado! Tipo: " + Categoria.class.getName());
+		}
+		return lista;
 	}
 	
 	public Categoria insert(Categoria obj) {
@@ -36,7 +45,7 @@ public class CategoriaService {
 	}
 
 	public void delete(Integer id) {
-		find(id);		
+		find(id);
 		try {
 			repo.delete(id);
 		} catch (DataIntegrityViolationException e) {
